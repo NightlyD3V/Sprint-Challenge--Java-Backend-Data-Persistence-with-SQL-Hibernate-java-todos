@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -24,6 +25,7 @@ public class TodoController {
     TodoService todoService;
     UserService userService;
 
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     @GetMapping(value = "users/mine",
             produces = {"application/json"})
     public ResponseEntity<?> userTodos()
@@ -32,6 +34,7 @@ public class TodoController {
         return new ResponseEntity<>(allTodos, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @PostMapping(value = "/users",
             produces = {"application/json"})
     public ResponseEntity<?> addUser(@Valid @RequestBody User newUser) throws URISyntaxException
@@ -64,6 +67,7 @@ public class TodoController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @DeleteMapping(value = "users/userid/{userid}", produces = {"application/json"})
     public ResponseEntity<?> deleteUser(@PathVariable long id)
     {

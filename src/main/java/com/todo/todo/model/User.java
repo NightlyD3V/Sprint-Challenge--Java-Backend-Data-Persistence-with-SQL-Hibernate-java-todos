@@ -36,9 +36,7 @@ public class User extends Auditable {
     @JsonIgnoreProperties("user")
     private List<Todo> todos = new ArrayList<>();
 
-    public User()
-    {
-    }
+    public User(){ }
 
     public User(String username, String password, List<UserRoles> userRoles)
     {

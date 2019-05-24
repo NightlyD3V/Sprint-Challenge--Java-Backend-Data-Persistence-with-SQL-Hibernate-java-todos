@@ -1,13 +1,13 @@
 package com.todo.todo.service;
 
 import com.todo.todo.model.Todo;
+import com.todo.todo.model.User;
 import com.todo.todo.model.UserRoles;
 import com.todo.todo.repository.RoleRepository;
 import com.todo.todo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -83,7 +83,7 @@ public class UserServiceImpl implements UserDetailsService, UserService
 
         for (Todo q : user.getTodos())
         {
-            newUser.getTodos().add( new Todo(q.getTodo(), newUser));
+            newUser.getTodos().add( new Todo(q.getDescription(), "date", newUser));
         }
 
         return userrepos.save(newUser);
@@ -91,7 +91,7 @@ public class UserServiceImpl implements UserDetailsService, UserService
 
     @Transactional
     @Override
-    public com.todo.todo.model.User update(User user, long id)
+    public com.todo.todo.model.User update(com.todo.todo.model.User user, long id)
     {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         com.todo.todo.model.User currentUser = userrepos.findByUsername(authentication.getName());
@@ -128,7 +128,7 @@ public class UserServiceImpl implements UserDetailsService, UserService
                 {
                     for (Todo q : user.getTodos())
                     {
-                        currentUser.getTodos().add( new Todo(q.getTodos(), currentUser));
+                        currentUser.getTodos().add( new Todo(q.getDescription(), "date", currentUser));
                     }
                 }
                 return userrepos.save(currentUser);

@@ -15,6 +15,7 @@ public class Todo extends Auditable
     @Column(nullable = false)
     private String description;
     private String date;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userid", nullable = false)
     @JsonIgnoreProperties({"todos", "hibernateLazyInitializer"})
