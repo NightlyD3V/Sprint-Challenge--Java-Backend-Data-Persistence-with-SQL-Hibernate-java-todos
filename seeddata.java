@@ -1,7 +1,6 @@
 @Transactional
 @Component
-public class SeedData implements CommandLineRunner
-{
+public class SeedData implements CommandLineRunner {
     RoleRepository rolerepos;
     UserRepository userrepos;
     ToDoRepository todorepos;
